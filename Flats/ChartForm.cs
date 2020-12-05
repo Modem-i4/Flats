@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Flats
 {
@@ -17,11 +18,14 @@ namespace Flats
         {
             InitializeComponent();
             chart1.Titles.Add(model.Name);
-            var prop = typeof(Model).GetProperties();//.Where(o => o.GetType().Name == "double").Select(q => q.).ToArray();
-            for (int i = 3; i < prop.Length; i++)
+            var prop = typeof(Model).GetProperties();
+            for (int i = 3; i < 24; i++)
             {
-                chart1.Series.Add(prop[i].Name);
-                chart1.Series.Last().Points.AddXY(i, typeof(Model).GetProperty(prop[i].Name).GetValue(model));
+                var ser = new Series(prop[i].Name);
+                ser.Points.AddXY(i, typeof(Model).GetProperty(prop[i].Name).GetValue(model));
+                ser.Label = prop[i].Name;
+                ser.SmartLabelStyle.MovingDirection = (LabelAlignmentStyles.Bottom|LabelAlignmentStyles.Top);
+                chart1.Series.Add(ser);
             }
         }
     }

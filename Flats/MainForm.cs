@@ -21,12 +21,15 @@ namespace Flats
     {
         private FlatsRepository flatsRepos = new FlatsRepository();
         private ModelsRepository modelsRepos = new ModelsRepository();
+        private List<Flat> Flats = new List<Flat>();
+        private List<Model> models;
+
         public MainForm()
         {
             InitializeComponent();
-            var flats = flatsRepos.GetAll();
-            if (flats != null)
-                dataGridViewDefault.DataSource = flats;
+            Flats = flatsRepos.GetAll();
+            if (Flats != null)
+                dataGridViewDefault.DataSource = Flats;
         }
 
         private void toolStripButtonOpen_Click(object sender, EventArgs e)
@@ -164,19 +167,18 @@ namespace Flats
                             break;
                     }
                     model3.Fit();
-
-                    newModel.LogLikehood = model3.LogLikelihood;
-                    newModel.KernelLogLikehood = model3.GetKernelLogLikelihood();
-                    newModel.Akaike = model3.GetAkaikeInformationCriterion();
-                    newModel.CorrectedAIC = model3.GetCorrectedAkaikeInformationCriterion();
-                    newModel.Bayesian = model3.GetBayesianInformationCriterion();
-                    newModel.ChiSquared = model3.GetChiSquare();
                     if(comboBoxGeneralizedType.Text == "Normal" || comboBoxGeneralizedType.Text == "Poisson")
                     {
+                        newModel.LogLikehood = model3.LogLikelihood;
+                        newModel.KernelLogLikehood = model3.GetKernelLogLikelihood();
+                        newModel.Akaike = model3.GetAkaikeInformationCriterion();
+                        newModel.CorrectedAIC = model3.GetCorrectedAkaikeInformationCriterion();
+                        newModel.Bayesian = model3.GetBayesianInformationCriterion();
+                        newModel.ChiSquared = model3.GetChiSquare();
                         stats = new string[]
                         {
                         $"Log likelihood   {model3.LogLikelihood:f2}",
-                        $"Kernel log likelihood::   {model3.GetKernelLogLikelihood():f2}",
+                        $"Kernel log likelihood:   {model3.GetKernelLogLikelihood():f2}",
                         $"Akaike (AIC):   {model3.GetAkaikeInformationCriterion():f2}",
                         $"Corrected AIC:   {model3.GetCorrectedAkaikeInformationCriterion():f2}",
                         $"Bayesian (BIC):   { model3.GetBayesianInformationCriterion():f2}",
@@ -209,9 +211,13 @@ namespace Flats
         {
             if(tabControl1.SelectedIndex == 2)
             {
-                dataGridViewModels.DataSource = modelsRepos.GetAll();
-                if (dataGridViewModels.Rows[0] != null)
+                models = modelsRepos.GetAll();
+                if (models != null)
+                {
+                    dataGridViewModels.DataSource = models;
                     dataGridViewModels.Rows[0].Selected = true;
+                    SwitchParamsVisibility();
+                }
             }
         }
 
@@ -223,7 +229,11 @@ namespace Flats
 
         private void buttonCalculatePrice_Click(object sender, EventArgs e)
         {
-            CalculatePrice cp = new CalculatePrice();
+            Random rand = new Random();
+            CalculatePrice cp = new CalculatePrice(
+                model: (Model)dataGridViewModels.SelectedRows[0].DataBoundItem, 
+                template: Flats[rand.Next(Flats.Count)]
+                );
             cp.Show();
         }
 
@@ -235,6 +245,23 @@ namespace Flats
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 WordExporter.Export_Data_To_Word(dataGridViewParams, sfd.FileName);
+            }
+        }
+
+        private void dataGridViewModels_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            System.Reflection.PropertyInfo sortBy = typeof(Model).GetProperty(dataGridViewModels.Columns[e.ColumnIndex].Name);
+            models = models.OrderByDescending(o => sortBy.GetValue(o, null)).ToList();
+            dataGridViewModels.DataSource = models;
+        }
+
+        private void checkBoxShowParams_CheckedChanged(object sender, EventArgs e) => SwitchParamsVisibility();
+        private void SwitchParamsVisibility()
+        {
+            bool visibility = dataGridViewModels.Columns[3].Visible;
+            for (int i = 3; i < 25; i++)
+            {
+                dataGridViewModels.Columns[i].Visible = !visibility;
             }
         }
     }

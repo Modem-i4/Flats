@@ -65,5 +65,6 @@ namespace Flats.Repositories
                 return await ctx.Flats.ToListAsync();
             }
         }
+
     }
 }

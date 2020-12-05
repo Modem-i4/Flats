@@ -30,7 +30,6 @@ namespace Flats
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -38,6 +37,7 @@ namespace Flats
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.dataGridViewDefault = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.buttonExport = new System.Windows.Forms.Button();
             this.listBoxStats = new System.Windows.Forms.ListBox();
             this.dataGridViewParams = new System.Windows.Forms.DataGridView();
             this.label3 = new System.Windows.Forms.Label();
@@ -51,7 +51,10 @@ namespace Flats
             this.buttonCalculatePrice = new System.Windows.Forms.Button();
             this.buttonViewChart = new System.Windows.Forms.Button();
             this.dataGridViewModels = new System.Windows.Forms.DataGridView();
-            this.buttonExport = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.checkBoxShowParams = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -61,6 +64,7 @@ namespace Flats
             this.tabPage3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewModels)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -101,11 +105,11 @@ namespace Flats
             // toolStripButton1
             // 
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.Image = global::Flats.Properties.Resources.open;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(29, 24);
-            this.toolStripButton1.Text = "toolStripButtonOpen";
+            this.toolStripButton1.Text = "Open";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButtonOpen_Click);
             // 
             // dataGridViewDefault
@@ -136,6 +140,16 @@ namespace Flats
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Analyze";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // buttonExport
+            // 
+            this.buttonExport.Location = new System.Drawing.Point(552, 368);
+            this.buttonExport.Name = "buttonExport";
+            this.buttonExport.Size = new System.Drawing.Size(210, 23);
+            this.buttonExport.TabIndex = 5;
+            this.buttonExport.Text = "Export to docx";
+            this.buttonExport.UseVisualStyleBackColor = true;
+            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
             // 
             // listBoxStats
             // 
@@ -235,6 +249,9 @@ namespace Flats
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.groupBox2);
+            this.tabPage3.Controls.Add(this.label5);
+            this.tabPage3.Controls.Add(this.label4);
             this.tabPage3.Controls.Add(this.groupBox1);
             this.tabPage3.Controls.Add(this.dataGridViewModels);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
@@ -257,6 +274,7 @@ namespace Flats
             // 
             // buttonCalculatePrice
             // 
+            this.buttonCalculatePrice.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonCalculatePrice.Location = new System.Drawing.Point(156, 20);
             this.buttonCalculatePrice.Name = "buttonCalculatePrice";
             this.buttonCalculatePrice.Size = new System.Drawing.Size(144, 23);
@@ -267,6 +285,7 @@ namespace Flats
             // 
             // buttonViewChart
             // 
+            this.buttonViewChart.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonViewChart.Location = new System.Drawing.Point(6, 20);
             this.buttonViewChart.Name = "buttonViewChart";
             this.buttonViewChart.Size = new System.Drawing.Size(144, 23);
@@ -284,6 +303,7 @@ namespace Flats
             this.dataGridViewModels.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewModels.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridViewModels.Location = new System.Drawing.Point(3, 58);
+            this.dataGridViewModels.MultiSelect = false;
             this.dataGridViewModels.Name = "dataGridViewModels";
             this.dataGridViewModels.ReadOnly = true;
             this.dataGridViewModels.RowHeadersWidth = 51;
@@ -294,16 +314,46 @@ namespace Flats
             this.dataGridViewModels.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewModels.Size = new System.Drawing.Size(762, 336);
             this.dataGridViewModels.TabIndex = 0;
+            this.dataGridViewModels.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridViewModels_ColumnHeaderMouseClick);
             // 
-            // buttonExport
+            // label4
             // 
-            this.buttonExport.Location = new System.Drawing.Point(552, 368);
-            this.buttonExport.Name = "buttonExport";
-            this.buttonExport.Size = new System.Drawing.Size(210, 23);
-            this.buttonExport.TabIndex = 5;
-            this.buttonExport.Text = "Export to docx";
-            this.buttonExport.UseVisualStyleBackColor = true;
-            this.buttonExport.Click += new System.EventHandler(this.buttonExport_Click);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(478, 12);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(202, 17);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Click on a header to order by it";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(478, 32);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(232, 17);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "Try ordering by a regression stat ->";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.checkBoxShowParams);
+            this.groupBox2.Location = new System.Drawing.Point(319, 3);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(153, 48);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Display";
+            // 
+            // checkBoxShowParams
+            // 
+            this.checkBoxShowParams.AutoSize = true;
+            this.checkBoxShowParams.Location = new System.Drawing.Point(6, 21);
+            this.checkBoxShowParams.Name = "checkBoxShowParams";
+            this.checkBoxShowParams.Size = new System.Drawing.Size(140, 21);
+            this.checkBoxShowParams.TabIndex = 0;
+            this.checkBoxShowParams.Text = "Show parameters";
+            this.checkBoxShowParams.UseVisualStyleBackColor = true;
+            this.checkBoxShowParams.CheckedChanged += new System.EventHandler(this.checkBoxShowParams_CheckedChanged);
             // 
             // MainForm
             // 
@@ -311,6 +361,7 @@ namespace Flats
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tabControl1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MainForm";
             this.Text = "Form1";
             this.tabControl1.ResumeLayout(false);
@@ -323,8 +374,11 @@ namespace Flats
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewParams)).EndInit();
             this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewModels)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -351,6 +405,10 @@ namespace Flats
         private System.Windows.Forms.Button buttonCalculatePrice;
         private System.Windows.Forms.Button buttonViewChart;
         private System.Windows.Forms.Button buttonExport;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox checkBoxShowParams;
     }
 }
 
